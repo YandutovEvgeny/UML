@@ -3,13 +3,13 @@ using namespace std;
 
 #define MIN_TANK_VOLUME 40
 #define MAX_TANK_VOLUME 80
-#define MIN_ENGIN_CONSUMPTION 4
-#define MAX_ENGIN_CONSUMPTION 25
+#define MIN_ENGINE_CONSUMPTION 4
+#define MAX_ENGINE_CONSUMPTION 25
 
 class Tank
 {
-	const unsigned int VOLUME;
-	double fuel_level;
+	const unsigned int VOLUME;   //Объём бака
+	double fuel_level;           //Уровень топлива
 public:
 	const unsigned int get_VOLUME()const
 	{
@@ -51,9 +51,9 @@ public:
 
 class Engine
 {
-	double consumption;
-	double consumption_per_second;
-	bool is_started;
+	double consumption;              //Расход топлива
+	double consumption_per_second;   //Расход топлива в секунду
+	bool is_started;                 //Старт/стоп
 public:
 	double get_consumption()const
 	{
@@ -69,18 +69,18 @@ public:
 	}
 	bool start()
 	{
-		is_started = true;
+		return is_started = true;
 	}
 	bool stop()
 	{
-		is_started = false;
+		return is_started = false;
 	}
 	void set_consumption(double consumption)
 	{
-		if (consumption >= MIN_ENGIN_CONSUMPTION && consumption <= MAX_ENGIN_CONSUMPTION)
+		if (consumption >= MIN_ENGINE_CONSUMPTION && consumption <= MAX_ENGINE_CONSUMPTION)
 			this->consumption = consumption;
 		else
-			this->consumption = MAX_ENGIN_CONSUMPTION / 2;
+			this->consumption = MAX_ENGINE_CONSUMPTION / 2;
 		consumption_per_second = consumption * .3e-4;
 	}
 	explicit Engine(double consumption)
@@ -101,7 +101,45 @@ public:
 	}
 };
 
+class Car
+{
+	Tank car_tank;
+	Engine car_engine;
+public:
+	Car(double fuel_level, double consumption):car_engine(consumption), car_tank(fuel_level)
+	{
+		this->car_tank.fill(fuel_level);
+		this->car_engine.set_consumption(consumption);
+		cout << "Car is ready:\t" << this << endl;
+	}
+	~Car()
+	{
+		cout << "Car is gone:\t" << this << endl;
+	}
+	void Launch_car()
+	{
+		if (car_tank.get_fuel_level() > 0)
+		{
+			car_engine.start();
+			do
+			{
+				car_tank.give_fuel(car_engine.get_consumption_per_second());
+			} while (car_tank.get_fuel_level()!=0);
+		}
+		else car_engine.stop();
+	}
+	void Car_info()
+	{
+		car_tank.info();
+		car_engine.info();
+	}
+};
+
+
+
+
 //#define TANK_CHECK
+//#define ENGINE_CHECK
 
 void main()
 {
@@ -118,6 +156,12 @@ void main()
 	}
 #endif // TANK_CHECK
 
+#ifdef ENGINE_CHECK
 	Engine engine(9);
 	engine.info();
+#endif // ENGINE_CHECK
+	
+	Car BMW_e39(60, 10);
+	BMW_e39.Launch_car();
+	BMW_e39.Car_info();
 }
