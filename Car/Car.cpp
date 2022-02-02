@@ -191,6 +191,12 @@ public:
 		system("CLS");
 		cout << "You are out of car" << endl;
 	}
+	void move_forward()
+	{
+		control.free_wheeling_thread = std::thread(&Car::accelerate, this);
+	}
+
+	//void stop_car()
 	
 	void control_car()
 	{
@@ -213,12 +219,16 @@ public:
 				if (engine.started())stop_engine();
 				else start_engine();
 				break;
+			case 'W':case 'w':
+				if (engine.started())move_forward();
+				break;
 			case Escape:
 				if (control.panel_thread.joinable())get_out();
 				if (control.engine_idle_thread.joinable())stop_engine();
+				control.free_wheeling_thread.join();
 				break;
 			}
-		} while (key != 27);
+		} while (key != Escape);
 	}
 
 	void engine_idle()
@@ -234,8 +244,19 @@ public:
 			system("CLS");
 			cout << "Fuel level: " << tank.get_fuel_level() << " liters." << endl;
 			cout << "Engine is " << (engine.started() ? "started" : "stoped") << endl;
+			cout << "Velocity: " << this->accelerate() << " km/h." << endl;
 			std::this_thread::sleep_for(1s);
 		}
+	}
+
+	void accelerate()
+	{
+		size_t velocity;
+		if (engine.started() && tank.give_fuel(engine.get_consumption_per_second()))
+		{
+			velocity += 10;
+		}
+		std::this_thread::sleep_for(1s);
 	}
 
 	void info()const
