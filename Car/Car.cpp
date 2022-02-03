@@ -71,13 +71,13 @@ public:
 	{
 		return is_started;
 	}
-	bool start()
+	void start()
 	{
-		return is_started = true;
+		is_started = true;
 	}
-	bool stop()
+	void stop()
 	{
-		return is_started = false;
+		is_started = false;
 	}
 	void set_consumption(double consumption)
 	{
@@ -171,13 +171,16 @@ public:
 	}
 	void start_engine()
 	{
-		if (tank.get_fuel_level())engine.start();
-		control.engine_idle_thread = std::thread(&Car::engine_idle, this);
+		if (tank.get_fuel_level())
+		{
+			engine.start();
+			control.engine_idle_thread = std::thread(&Car::engine_idle, this);
+		}
 	}
 	void stop_engine()
 	{
 		engine.stop();
-		control.engine_idle_thread.join();
+		if(control.engine_idle_thread.joinable())control.engine_idle_thread.join();
 	}
 	void get_in()
 	{
@@ -187,7 +190,7 @@ public:
 	void get_out()
 	{
 		driver_inside = false;
-		control.panel_thread.join();  //Останавливаем выполнение потока panel_thread.
+		if(control.panel_thread.joinable())control.panel_thread.join();  //Останавливаем выполнение потока panel_thread.
 		system("CLS");
 		cout << "You are out of car" << endl;
 	}
@@ -214,8 +217,8 @@ public:
 				else start_engine();
 				break;
 			case Escape:
-				if (control.panel_thread.joinable())get_out();
-				if (control.engine_idle_thread.joinable())stop_engine();
+				stop_engine();
+				get_out();
 				break;
 			}
 		} while (key != Escape);
@@ -232,7 +235,15 @@ public:
 		while (driver_inside)
 		{
 			system("CLS");
-			cout << "Fuel level: " << tank.get_fuel_level() << " liters." << endl;
+			cout << "Fuel level: " << tank.get_fuel_level() << " liters.";
+			if (tank.get_fuel_level() < 5 && engine.started())
+			{
+				HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+				SetConsoleTextAttribute(hConsole, 0x0C);
+				cout << "\tLOW FUEL!";
+				SetConsoleTextAttribute(hConsole, 0x07);
+			}
+			cout << endl;
 			cout << "Engine is " << (engine.started() ? "started" : "stoped") << endl;
 			std::this_thread::sleep_for(1s);
 		}
