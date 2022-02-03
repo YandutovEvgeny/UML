@@ -218,7 +218,7 @@ public:
 				if (control.engine_idle_thread.joinable())stop_engine();
 				break;
 			}
-		} while (key != 27);
+		} while (key != Escape);
 	}
 
 	void engine_idle()
