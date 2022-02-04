@@ -97,6 +97,10 @@ public:
 	{
 		cout << "Engine is gone:\t" << this << endl;
 	}
+	double set_consumption_by_speed(int speed)
+	{
+		if (speed > 0 && speed <= 60)consumption_per_second * 10;
+	}
 	void info()const
 	{
 		cout << "Consumption:\t" << consumption << endl;
@@ -248,7 +252,7 @@ public:
 			}
 			cout << endl;
 			cout << "Fuel level: " << tank.get_fuel_level() << " liters." << endl;
-			cout << "Consumption: " << engine.get_consumption_per_second() + ranges_of_consumption() << " liters.";
+			cout << "Consumption: " << engine.get_consumption_per_second() << " liters.";
 			if (tank.get_fuel_level() < 5 && engine.started())
 			{
 				HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -263,15 +267,7 @@ public:
 		}
 	}
 
-	double ranges_of_consumption()
-	{
-		if (speed < 60)return 0;
-		else if (speed >= 61 && speed <= 100)return -(engine.get_consumption_per_second() / 4);
-		else if (speed >= 101 && speed <= 140)return 0;
-		else if (speed >= 141 && speed <= 200)return engine.get_consumption_per_second() / 4;
-		else if (speed >= 201 && speed <= MAX_SPEED)return engine.get_consumption_per_second() / 2;
-		else if (speed > MAX_SPEED)return engine.get_consumption_per_second() / 2;
-	}
+	
 
 	void info()const
 	{
