@@ -55,6 +55,7 @@ public:
 
 class Engine
 {
+	double default_consumption;
 	double consumption;              //Расход топлива
 	double consumption_per_second;   //Расход топлива в секунду
 	bool is_started;                 //Старт/стоп
@@ -90,6 +91,7 @@ public:
 	explicit Engine(double consumption)
 	{
 		set_consumption(consumption);
+		default_consumption = this->consumption;
 		is_started = false;
 		cout << "Engine is ready:\t" << this << endl;
 	}
@@ -99,7 +101,13 @@ public:
 	}
 	double set_consumption_by_speed(int speed)
 	{
-		if (speed > 0 && speed <= 60)consumption_per_second * 10;
+		set_consumption(get_consumption());
+		if (speed > 0 && speed <= 60)consumption_per_second *= 6.6;
+		else if (speed > 60 && speed <= 100)consumption_per_second *= 4.6;
+		else if (speed > 100 && speed <= 140)consumption_per_second *= 6.6;
+		else if (speed > 140 && speed <= 200)consumption_per_second *= 8.3;
+		else if (speed > 200 && speed <= 300)consumption_per_second *= 10;
+		return consumption_per_second;
 	}
 	void info()const
 	{
@@ -216,6 +224,7 @@ public:
 				break;
 			}
 			if (speed == 0 && control.free_wheeling_thread.joinable())control.free_wheeling_thread.join();
+			engine.set_consumption_by_speed(speed);
 		} while (key != Escape);
 	}
 
@@ -251,8 +260,7 @@ public:
 				SetConsoleTextAttribute(hConsole, 0x07);
 			}
 			cout << endl;
-			cout << "Fuel level: " << tank.get_fuel_level() << " liters." << endl;
-			cout << "Consumption: " << engine.get_consumption_per_second() << " liters.";
+			cout << "Fuel level: " << tank.get_fuel_level() << " liters.";
 			if (tank.get_fuel_level() < 5 && engine.started())
 			{
 				HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -261,13 +269,12 @@ public:
 				SetConsoleTextAttribute(hConsole, 0x07);
 			}
 			cout << endl;
+			cout << "Consumption: " << engine.get_consumption_per_second() << " liters." << endl;
 			cout << "Engine is " << (engine.started() ? "started." : "stoped.") << endl;
 			cout << "Speed: " << speed << " km/h." << endl;
 			std::this_thread::sleep_for(1s);
 		}
 	}
-
-	
 
 	void info()const
 	{
@@ -275,8 +282,6 @@ public:
 		engine.info();
 	}
 };
-
-
 
 
 //#define TANK_CHECK
@@ -304,7 +309,7 @@ void main()
 #endif // ENGINE_CHECK
 	
 #ifdef CAR_CHECK
-	Car BMW(7, 80, 250);
+	Car BMW(20, 80, 250);
 	cout << "Press enter to get in" << endl;
 	BMW.control_car();
 
