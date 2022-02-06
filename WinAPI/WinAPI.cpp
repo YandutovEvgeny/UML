@@ -25,6 +25,7 @@ INT WINAPI WinMain   //Главная функция, на подобии main()
 		//4) Значок и набор кнопок окна, например MB_OK, добавляет кнопку ок в окне
 #endif // MESSAGE_BOX
 
+	
 	DialogBoxParam(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), 0, DlgProc, 0);
 	//DialogBoxParam - функция для вызова диалогового окна
 		
@@ -41,7 +42,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPAram)
 		switch (LOWORD(wParam))
 		{
 		case IDOK:MessageBox(NULL, "Была нажата кнопка ОК", "Info", MB_ICONINFORMATION); break;
-		case IDCANCEL:EndDialog(hwnd, NULL); //break;
+		case IDCANCEL:EndDialog(hwnd, 0); break;
 		}
 	}
 	break;     
