@@ -34,10 +34,10 @@ INT WINAPI WinMain   //Главная функция, на подобии main()
 
 BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPAram)
 {
-	switch (uMsg)
+	switch (uMsg)  //Обрабатываем сообщения
 	{
-	case WM_INITDIALOG:break;  //Инициализация окна
-	case WM_COMMAND:
+	case WM_INITDIALOG:break;  //Инициализация окна, здесь будут добавлятся компоненты
+	case WM_COMMAND:           //Обработчик команд кнопок, полей ввода и тд
 	{
 		switch (LOWORD(wParam))
 		{
@@ -46,7 +46,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPAram)
 		}
 	}
 	break;     
-	case WM_CLOSE:  //Закрытие окна
+	case WM_CLOSE:  //Обработка закрытия окна пользователем
 		EndDialog(hwnd, 0);
 	}
 	return FALSE;
