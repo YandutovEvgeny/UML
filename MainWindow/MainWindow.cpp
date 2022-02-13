@@ -1,39 +1,41 @@
-//MainWindow
+п»ї//MainWindow
 #include<Windows.h>
 #include<stdio.h>
 #include"resource.h"
 
-CONST CHAR g_szCLASS_NAME[] = "MyWindowClass";
+CONST CHAR g_szCLASS_NAME[] = "MyWindowClass";	//Р“Р»РѕР±Р°Р»СЊРЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РёРјСЏ РєР»Р°СЃСЃР°
 CONST CHAR g_szTitle[] = "MyFirstTitleWindow";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
-	//1) Регистрация класса окна:
-	WNDCLASSEX wc;		//wc - window class
-	wc.cbSize = sizeof(WNDCLASSEX);
-	wc.style = 0;
-	wc.lpfnWndProc = WndProc;		//Указатель на процедуру окна. lp - long pointer, fn - function
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = hInstance;
-	//wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_GLOBAL));  //Иконка в панели задач
-	//wc.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_GLOBAL)); //Small icon(Заголовок окна)
+	//1) Р РµРіРёСЃС‚СЂР°С†РёСЏ РєР»Р°СЃСЃР° РѕРєРЅР°:
+	WNDCLASSEX wc;	//РЎРѕР·РґР°С‘Рј РѕР±СЉРµРєС‚ СЃС‚СЂСѓРєС‚СѓСЂС‹ WindowClassExtended	//wc - window class
+	//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїРѕР»РµР№ СЃС‚СЂСѓРєС‚СѓСЂС‹:
+	wc.cbSize = sizeof(WNDCLASSEX);	//Р Р°Р·РјРµСЂ СЃС‚СЂСѓРєС‚СѓСЂС‹
+	wc.style = 0;	//РЎС‚РёР»РµР№ РЅРёРєР°РєРёС… РЅРµС‚
+	wc.lpfnWndProc = WndProc;		//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РїСЂРѕС†РµРґСѓСЂСѓ РѕРєРЅР°. lp - long pointer, fn - function
+	wc.cbClsExtra = 0;	//Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ РїР°РјСЏС‚СЊ РґР»СЏ РѕРєРЅР° РЅР°Рј РЅРµ РЅСѓР¶РЅР°
+	wc.cbWndExtra = 0;	
+	wc.hInstance = hInstance;	//РќР°С€ РїРµСЂРІС‹Р№ РїСЂРёРЅРёРјР°РµРјС‹Р№ РїР°СЂР°РјРµС‚СЂ
+	//wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_GLOBAL));  //РРєРѕРЅРєР° РІ РїР°РЅРµР»Рё Р·Р°РґР°С‡
+	//wc.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_GLOBAL)); //Small icon(Р—Р°РіРѕР»РѕРІРѕРє РѕРєРЅР°)
 	wc.hIcon = (HICON)LoadImage(hInstance, "Icon1.ico", IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
 	wc.hIconSm = (HICON)LoadImage(hInstance, "ConnectGlobe.ico", IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
-	wc.hCursor = LoadCursor(hInstance, MAKEINTRESOURCE(IDC_CURSOR1));
-	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wc.hCursor = LoadCursor(hInstance, MAKEINTRESOURCE(IDC_CURSOR1));	//РЈСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РєСѓСЂСЃРѕСЂР°
+	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);	//РЈСЃС‚Р°РЅРѕРІР»РµРЅРёРµ Р·Р°Р»РёРІРєРё С„РѕРЅР° РѕРєРЅР°
 	wc.lpszClassName = g_szCLASS_NAME;		//g_sz - global string zero
-	wc.lpszMenuName = NULL;
+	wc.lpszMenuName = NULL;	//РњРµРЅСЋ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚
 
-	if (!RegisterClassEx(&wc))
+	if (!RegisterClassEx(&wc))	//Р•СЃР»Рё РЅРµ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ РєР»Р°СЃСЃ РѕРєРЅР°
 	{
+		//Р’С‹РґР°С‘Рј РѕРєРЅРѕ СЃРѕРѕР±С‰РµРЅРёСЏ СЃ РѕС€РёР±РєРѕР№:
 		MessageBox(NULL, "Class registration failed!", "Error", MB_OK | MB_ICONERROR);
 		return 0;
 	}
 
-	//2)Создание окна:
+	//2)РЎРѕР·РґР°РЅРёРµ РѕРєРЅР°:
 	int screen_width = GetSystemMetrics(SM_CXSCREEN);
 	int screen_height = GetSystemMetrics(SM_CYSCREEN);
 	int window_width = screen_width - screen_width / 4;
@@ -44,15 +46,15 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	HWND hwnd = CreateWindowEx
 	(
 		WS_EX_CLIENTEDGE,	//exStyle
-		g_szCLASS_NAME,		//Имя класса окна
-		g_szCLASS_NAME,		//Заголовок окна
-		WS_OVERLAPPEDWINDOW,//Стиль окна overlapped всегда задаётся для главного окна программы
-		window_start_x, window_start_y, //Позиция окна на экране
-		window_width, window_height, //Размер окна
-		NULL,		//Родительсоке окно
-		NULL,		//Меню отсутвует
-		hInstance,	//*.exe - файл окна
-		NULL
+		g_szCLASS_NAME,		//РРјСЏ РєР»Р°СЃСЃР° РѕРєРЅР°
+		g_szCLASS_NAME,		//Р—Р°РіРѕР»РѕРІРѕРє РѕРєРЅР°
+		WS_OVERLAPPEDWINDOW,//РЎС‚РёР»СЊ РѕРєРЅР° overlapped РІСЃРµРіРґР° Р·Р°РґР°С‘С‚СЃСЏ РґР»СЏ РіР»Р°РІРЅРѕРіРѕ РѕРєРЅР° РїСЂРѕРіСЂР°РјРјС‹
+		window_start_x, window_start_y, //РџРѕР·РёС†РёСЏ РѕРєРЅР° РЅР° СЌРєСЂР°РЅРµ
+		window_width, window_height, //Р Р°Р·РјРµСЂ РѕРєРЅР°
+		NULL,		//Р РѕРґРёС‚РµР»СЊСЃРѕРєРµ РѕРєРЅРѕ
+		NULL,		//РњРµРЅСЋ РѕС‚СЃСѓС‚РІСѓРµС‚
+		hInstance,	//*.exe - С„Р°Р№Р» РѕРєРЅР°
+		NULL		//РџРѕСЃР»РµРґРЅРёР№ РїР°СЂР°РјРµС‚СЂ РІСЃРµРіРґР° СЂР°РІРµРЅ NULL
 	);
 
 	if (hwnd == NULL)
@@ -60,10 +62,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 		MessageBox(NULL, "Window creation faild", "Error", MB_OK | MB_ICONERROR);
 		return 0;
 	}
-	ShowWindow(hwnd, nCmdShow);		//Задаём режим отображения окна
-	UpdateWindow(hwnd);		//Прорисовка окна (отправляем сообщение WM_PAINT)
+	ShowWindow(hwnd, nCmdShow);		//Р—Р°РґР°С‘Рј СЂРµР¶РёРј РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РѕРєРЅР°
+	UpdateWindow(hwnd);		//РџСЂРѕСЂРёСЃРѕРІРєР° РѕРєРЅР° (РѕС‚РїСЂР°РІР»СЏРµРј СЃРѕРѕР±С‰РµРЅРёРµ WM_PAINT)
 
-	//3)Запускаем цикл сообщений:
+	//3)Р—Р°РїСѓСЃРєР°РµРј С†РёРєР» СЃРѕРѕР±С‰РµРЅРёР№:
 	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0) > 0)
 	{
@@ -78,9 +80,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{
-	case WM_CREATE:		//Создаются элементы окна
+	case WM_CREATE:		//РЎРѕР·РґР°СЋС‚СЃСЏ СЌР»РµРјРµРЅС‚С‹ РѕРєРЅР°
 		break;
-	case WM_COMMAND:	//Обработка комманд нажатия кнопок, и других элементов окна
+	case WM_COMMAND:	//РћР±СЂР°Р±РѕС‚РєР° РєРѕРјРјР°РЅРґ РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРѕРє, Рё РґСЂСѓРіРёС… СЌР»РµРјРµРЅС‚РѕРІ РѕРєРЅР°
 		break;
 	case WM_SIZE:
 	case WM_MOVE:
@@ -94,21 +96,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		(
 			buffer, "%s Position: %dx%d, Size: %dx%d",
 			g_szTitle,
-			rect.left, rect.top,	//позиция окна
-			rect.right - rect.left, rect.bottom - rect.top	//Размер окна
+			rect.left, rect.top,	//РїРѕР·РёС†РёСЏ РѕРєРЅР°
+			rect.right - rect.left, rect.bottom - rect.top	//Р Р°Р·РјРµСЂ РѕРєРЅР°
 		);
-			//%s - строка
-			//%d - decimal(десятичное число)
+			//%s - СЃС‚СЂРѕРєР°
+			//%d - decimal(РґРµСЃСЏС‚РёС‡РЅРѕРµ С‡РёСЃР»Рѕ)
 		SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)buffer);
 	}
 	break;
-	case WM_CLOSE:
-		switch (MessageBox(hwnd, "Вы действительно хотите закрыть окно?", "Шо, внатуре?", MB_YESNO | MB_ICONQUESTION))
+	case WM_CLOSE:		//Р—Р°РєСЂС‹С‚РёРµ РѕРєРЅР°
+		switch (MessageBox(hwnd, "Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ Р·Р°РєСЂС‹С‚СЊ РѕРєРЅРѕ?", "РЁРѕ, РІРЅР°С‚СѓСЂРµ?", MB_YESNO | MB_ICONQUESTION))
 		{
 		case IDYES:
-			//MessageBox(hwnd, "Та лучше б двери закрыли :-)", "Info", MB_OK | MB_ICONERROR);
+			//MessageBox(hwnd, "РўР° Р»СѓС‡С€Рµ Р± РґРІРµСЂРё Р·Р°РєСЂС‹Р»Рё :-)", "Info", MB_OK | MB_ICONERROR);
 			DestroyWindow(hwnd); break;
-		//case IDNO:MessageBox(hwnd, "Это хорошо", "Info", MB_OK | MB_ICONINFORMATION); break;
+		//case IDNO:MessageBox(hwnd, "Р­С‚Рѕ С…РѕСЂРѕС€Рѕ", "Info", MB_OK | MB_ICONINFORMATION); break;
 		}
 		break;
 	case WM_DESTROY:
