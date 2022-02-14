@@ -63,8 +63,20 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_CREATE:
+	{
+		HWND ButtonEnter = CreateWindow
+		(
+			"BUTTON", "Войти", WS_VISIBLE | WS_CHILD,
+			450, 500, 80, 30, hwnd, NULL, NULL, NULL
+		);
+		HWND ButtonRegistration = CreateWindow
+		(
+			"BUTTON", "Регистрация", WS_VISIBLE | WS_CHILD,
+			550, 500, 120, 30, hwnd, NULL, NULL, NULL
+		);
 		break;
-	case WM_LBUTTONDOWN:
+	}
+	/*case WM_LBUTTONDOWN:
 	{
 		CHAR sz_FileName[MAX_PATH];
 		HINSTANCE hInstance = GetModuleHandle(0);
@@ -72,7 +84,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		GetModuleFileName(hInstance, sz_FileName, MAX_PATH);
 		MessageBox(hwnd, sz_FileName, "Данная программа находится в:", MB_OK | MB_ICONINFORMATION);
 	}
-		break;
+		break;*/
 	case WM_COMMAND:
 		break;
 	case WM_CLOSE:
