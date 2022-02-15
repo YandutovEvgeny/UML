@@ -1,9 +1,13 @@
 //MainWindowReplay
 #include<Windows.h>
+#include"resource.h"
 
 CONST CHAR g_szCLASS_NAME[] = "MyWindowClass";
+CONST CHAR g_szGREAT_LOGIN[] = "UncleFactor";
+CONST CHAR g_szGREAT_PASSWORD[] = "FiveHundredBullets5000";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -66,15 +70,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		HWND ButtonEnter = CreateWindow
 		(
-			"BUTTON", "Войти", WS_VISIBLE | WS_CHILD,
-			450, 500, 80, 30, hwnd, NULL, NULL, NULL
+			"BUTTON", "Начать работу", WS_VISIBLE | WS_CHILD,
+			500, 250, 130, 30, hwnd, (HMENU)IDC_BTN_ENTER, NULL, NULL
 		);
-		HWND ButtonRegistration = CreateWindow
-		(
-			"BUTTON", "Регистрация", WS_VISIBLE | WS_CHILD,
-			550, 500, 120, 30, hwnd, NULL, NULL, NULL
-		);
-		break;
+		
 	}
 	/*case WM_LBUTTONDOWN:
 	{
@@ -86,6 +85,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 		break;*/
 	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDC_BTN_ENTER:DialogBoxParam(NULL, MAKEINTRESOURCE(IDD_DIALOG1), hwnd, DlgProc, 0);
+			break;
+		}
 		break;
 	case WM_CLOSE:
 		switch (MessageBox(hwnd, "Вы действительно хотите закрыть окно?", "Info", MB_YESNO | MB_ICONQUESTION))
@@ -102,3 +106,42 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
+BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (uMsg)
+	{
+	case WM_INITDIALOG:
+		break;
+	case WM_COMMAND:
+	{
+		/*CONST INT SIZE = 256;
+		CHAR buffer[SIZE]{};*/
+	}
+		switch (LOWORD(wParam))
+		{
+		case IDENTER:
+		{
+			CONST INT SIZE = 256;
+			CHAR buffer[SIZE]{};
+			SendMessage(GetDlgItem(hwnd, IDC_EDIT_LOGIN), WM_GETTEXT, SIZE, (LPARAM)buffer);
+			if (strcmp(buffer, g_szGREAT_LOGIN) == 0)
+			{
+				SendMessage(GetDlgItem(hwnd, IDC_EDIT_PASSWORD), WM_GETTEXT, SIZE, (LPARAM)buffer);
+				if (strcmp(buffer, g_szGREAT_PASSWORD) == 0)
+				{
+					MessageBox(hwnd, "Успешный вход", "info", MB_OK | MB_TASKMODAL | MB_ICONINFORMATION);
+				}
+				else MessageBox(hwnd, "Неверный пароль", "error", MB_OK | MB_TASKMODAL | MB_ICONERROR);
+			}
+			else MessageBox(hwnd, "Неверный логин", "error", MB_OK | MB_TASKMODAL | MB_ICONERROR);
+			break;
+		}
+		case IDCANCEL: EndDialog(hwnd, 0); break;
+		break;
+		}
+	case WM_CLOSE:
+		EndDialog(hwnd, 0);
+		break;
+	}
+	return FALSE;
+}
