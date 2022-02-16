@@ -44,7 +44,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPAram)
 	case WM_INITDIALOG:		   //Инициализация окна, здесь будут добавлятся компоненты
 	{
 		HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON1));
-		SendMessage(hwnd, WM_SETICON, 0, (LPARAM)hIcon);
+		SendMessage(hwnd, WM_SETICON, 0, (LPARAM)hIcon);	//Для того, чтобы поставить иконку, нужно отправить сообщение
 		//SendMessage(GetDlgItem(hwnd, IDC_EDIT1), WM_SETFOCUS, 0, 0);
 		SendMessage(GetDlgItem(hwnd, IDC_EDIT1), WM_SETTEXT, 0, (LPARAM)LOGININVITATION);
 	}

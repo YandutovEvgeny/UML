@@ -76,9 +76,9 @@ BEGIN
     PUSHBUTTON      "Закрыть",IDCANCEL,249,105,40,14
     LTEXT           "Сервер http://192.168.1.1 запрашивает имя пользователя и пароль.",IDC_STATIC,33,14,241,23,SS_CENTERIMAGE
     LTEXT           "Имя пользователя",IDC_STATIC,33,46,65,17,SS_CENTERIMAGE
-    EDITTEXT        IDC_EDIT_LOGIN,100,48,106,14,ES_AUTOHSCROLL
     LTEXT           "Пароль",IDC_STATIC,69,75,27,15,SS_CENTERIMAGE
-    EDITTEXT        IDC_EDIT_PASSWORD,100,75,106,14,ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_NAME,99,48,114,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PASSWORD,99,75,114,14,ES_PASSWORD | ES_AUTOHSCROLL
 END
 
 
@@ -110,6 +110,16 @@ IDD_DIALOG1 AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON_GLOBAL         ICON                    "C:\\Users\\Admin\\Downloads\\iconfinder-connectedglobe-4417105_116615.ico"
 
 #endif    // Russian (Russia) resources
 /////////////////////////////////////////////////////////////////////////////
