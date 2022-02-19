@@ -70,7 +70,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		HWND ButtonEnter = CreateWindow
 		(
-			"BUTTON", "Начать работу", WS_VISIBLE | WS_CHILD,
+			"BUTTON", "Авторизироваться", WS_VISIBLE | WS_CHILD,
 			500, 250, 130, 30, hwnd, (HMENU)IDC_BTN_ENTER, NULL, NULL
 		);
 		
@@ -106,11 +106,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
+//Процедура вызова диалогового окна отвечающего за авторизацию:
 BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
+	{
+		HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON_GLOBAL));
+		SendMessage(hwnd, WM_SETICON, 0, (LPARAM)hIcon);
+	}
 		break;
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
@@ -124,7 +129,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				SendMessage(GetDlgItem(hwnd, IDC_EDIT_PASSWORD), WM_GETTEXT, MAX_PATH, (LPARAM)buffer);
 				if (strcmp(buffer, g_szGREAT_PASSWORD) == 0)
 				{
-					MessageBox(hwnd, "Успешный вход", "Info", MB_OK | MB_ICONINFORMATION); break;
+					//MessageBox(hwnd, "Успешный вход", "Info", MB_OK | MB_ICONINFORMATION); break;
 				}
 			}
 			else MessageBox(hwnd, "Неверный пароль или логин", "Error", MB_OK | MB_ICONERROR); break;
@@ -134,6 +139,21 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_CLOSE:
 		EndDialog(hwnd, 0);
+		break;
+	}
+	return FALSE;
+}
+
+//Процедура вызова диалогового окна отвечающего за "Wed-интерфейс роутера":
+BOOL CALLBACK WebDlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (uMsg)
+	{
+	case WM_INITDIALOG:
+		break;
+	case WM_COMMAND:
+		break;
+	case WM_CLOSE:
 		break;
 	}
 	return FALSE;
