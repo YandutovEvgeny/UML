@@ -130,6 +130,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				if (strcmp(buffer, g_szGREAT_PASSWORD) == 0)
 				{
 					//MessageBox(hwnd, "Успешный вход", "Info", MB_OK | MB_ICONINFORMATION); break;
+					DialogBoxParam(NULL, MAKEINTRESOURCE(IDD_DIALOG2), hwnd, WebDlgProc, 0);
 				}
 			}
 			else MessageBox(hwnd, "Неверный пароль или логин", "Error", MB_OK | MB_ICONERROR); break;
@@ -150,10 +151,19 @@ BOOL CALLBACK WebDlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
+	{
+		HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON_GLOBAL));
+		SendMessage(hwnd, WM_SETICON, 0, (LPARAM)hIcon);
+	}
 		break;
 	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDC_BTN_RELOAD: MessageBox(hwnd, "Конфигурация обновлена!", "Info", MB_OK | MB_ICONINFORMATION); break;
+		}
 		break;
 	case WM_CLOSE:
+		EndDialog(hwnd, 0);
 		break;
 	}
 	return FALSE;
