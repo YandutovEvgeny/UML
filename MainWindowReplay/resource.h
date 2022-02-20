@@ -9,7 +9,6 @@
 #define IDENTER                         1001
 #define IDC_EDIT_NAME                   1005
 #define IDC_EDIT_PASSWORD               1006
-#define IDC_SCROLLBAR1                  1007
 #define IDC_BUTTON1                     1008
 #define IDC_BTN_RELOAD                  1008
 
