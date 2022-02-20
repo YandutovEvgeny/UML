@@ -24,6 +24,7 @@
     <ProjectGuid>{4ee40048-608c-4ffb-9777-3f74febb835a}</ProjectGuid>
     <RootNamespace>MainWindowReplay</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Web interface of router</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

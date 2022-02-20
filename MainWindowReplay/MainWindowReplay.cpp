@@ -2,12 +2,13 @@
 #include<Windows.h>
 #include"resource.h"
 
-CONST CHAR g_szCLASS_NAME[] = "MyWindowClass";
+CONST CHAR g_szCLASS_NAME[] = "Окно авторизации";
 CONST CHAR g_szGREAT_LOGIN[] = "admin";
 CONST CHAR g_szGREAT_PASSWORD[] = "admin";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK WebDlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -162,6 +163,38 @@ BOOL CALLBACK WebDlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case IDC_BTN_RELOAD: MessageBox(hwnd, "Конфигурация обновлена!", "Info", MB_OK | MB_ICONINFORMATION); break;
 		}
 		break;
+	case WM_SIZE:
+	{
+		SCROLLINFO scrInfo;
+		scrInfo.cbSize = sizeof(SCROLLINFO);
+		scrInfo.nPage = HIWORD(lParam);
+		scrInfo.nMin = 0;
+		scrInfo.nMax = 1000;
+		scrInfo.fMask = SIF_RANGE | SIF_PAGE;
+		SetScrollInfo(hwnd, SB_VERT, &scrInfo, TRUE);
+	}
+	break;
+	case WM_VSCROLL:
+	{
+		SCROLLINFO scrInfo;
+		scrInfo.cbSize = sizeof(SCROLLINFO);
+		scrInfo.fMask = SIF_ALL;
+		GetScrollInfo(hwnd, SB_VERT, &scrInfo);
+		int currentPos = scrInfo.nPos;
+		switch (LOWORD(wParam))
+		{
+		case SB_LINEUP:scrInfo.nPos -= 1; break;
+		case SB_LINEDOWN:scrInfo.nPos += 1; break;
+		case SB_THUMBTRACK:scrInfo.nPos = scrInfo.nTrackPos; break;
+		default:break;
+		}
+		scrInfo.fMask = SIF_POS;
+		SetScrollInfo(hwnd, SB_VERT, &scrInfo, TRUE);
+		GetScrollInfo(hwnd, SB_VERT, &scrInfo);
+		int yScroll = currentPos - scrInfo.nPos;
+		ScrollWindow(hwnd, 0, yScroll, NULL, NULL);
+	}
+	break;
 	case WM_CLOSE:
 		EndDialog(hwnd, 0);
 		break;

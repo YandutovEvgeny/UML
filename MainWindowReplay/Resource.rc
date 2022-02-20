@@ -82,9 +82,9 @@ BEGIN
 END
 
 IDD_DIALOG2 DIALOGEX 0, 0, 544, 679
-STYLE DS_SETFONT | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_VSCROLL | WS_SYSMENU
 CAPTION "Router"
-FONT 9, "Microsoft Sans Serif", 400, 0, 0xCC
+FONT 9, "MS Shell Dlg", 400, 0, 0xCC
 BEGIN
     CTEXT           "Статус роутера",IDC_STATIC,64,14,75,21,SS_CENTERIMAGE
     CTEXT           "В окне отображается статус и некоторые основные настройки роутера",IDC_STATIC,16,30,256,23,SS_CENTERIMAGE
@@ -107,7 +107,6 @@ BEGIN
     LTEXT           "F137A10A032B7BB3DACAE4FD2EDD4ADS",IDC_STATIC,141,196,195,19,SS_CENTERIMAGE | SS_SUNKEN
     LTEXT           "N71500486015285",IDC_STATIC,141,218,195,20,SS_CENTERIMAGE | SS_SUNKEN
     LTEXT           "44:E9:DD:18:8F:DA",IDC_STATIC,141,241,195,20,SS_CENTERIMAGE | SS_SUNKEN
-    SCROLLBAR       IDC_SCROLLBAR1,526,7,10,665,SBS_VERT
     GROUPBOX        "Конфигурация LAN",IDC_STATIC,16,273,324,129
     LTEXT           "IP-адрес",IDC_STATIC,21,284,117,20,SS_CENTERIMAGE | SS_SUNKEN
     LTEXT           "Маска подсети",IDC_STATIC,21,307,117,20,SS_CENTERIMAGE | SS_SUNKEN
@@ -188,8 +187,8 @@ BEGIN
     IDD_DIALOG2, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 536
-        TOPMARGIN, 7
+        RIGHTMARGIN, 526
+        TOPMARGIN, 6
         BOTTOMMARGIN, 672
     END
 END
@@ -208,87 +207,7 @@ END
 
 IDD_DIALOG2 AFX_DIALOG_LAYOUT
 BEGIN
-    0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 100, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0
+    0
 END
 
 
